@@ -110,7 +110,7 @@ Le mode "**Guest**" vous permet d'accéder directement aux fonctionnalités de c
 Ce projet est conçu à des fins éducatives et de démonstration des principes cryptographiques. Bien que certains algorithmes soient implémentés, il n'est pas destiné à une utilisation en production pour des données sensibles. Les implémentations de chiffrement réelles pour la production nécessitent des audits de sécurité rigoureux et des pratiques avancées non couvertes par ce projet.
 Auteurs
 
-    [Keinest NGNOMBOUEPO PEDEDZOUE / Soul King] - Développeur principal
+    [Soul King] - Développeur principal
 
 Licence
 
