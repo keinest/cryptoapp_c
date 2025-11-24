@@ -1,0 +1,68 @@
+                RSA Cryptosystem and Its Working Principle
+
+The RSA cryptosystem (Rivest-Shamir-Adleman) is an asymmetric encryption algorithm 
+widely used to secure communications over the Internet. It is based on the difficulty 
+of the prime factorization problem.
+
+        1. Basic Principle
+    
+    RSA is a public-key encryption system, meaning it uses a pair of keys:
+        
+        .A public key (used for encrypting messages).
+        .A private key (used for decrypting messages).
+    
+    The security of RSA relies on the fact that multiplying two large prime numbers 
+is easy, but finding these prime numbers from their product (factoring large integers) 
+is extremely difficult.
+
+    2. Key Generation
+        
+    Choose two large prime numbers p and q.
+    
+        .Compute their product:
+            .n = p x q. The value n is used as the modulus for both the public and private keys.
+        
+        .Compute Euler's totient function:
+            
+            phi(n) = (p - 1)x(q - 1). This function is needed to determine the exponent of the key.
+            
+        .Choose an integer e (public exponent) such that: 
+            1 < e < phi(n) and gcd(e,phi(n)) = 1(meaning that e must be coprime with phi(n)).
+        .Compute the private exponent d:
+                d = e^-1 mod phi(n). d is the modular inverse of e modulo phi(n).
+        
+        The generated keys are:
+
+            .Public key: (e,n)
+            .Private key: (d,n)
+
+    3. Encryption and Decryption
+        
+            @Encryption
+    
+To encrypt a message M (represented in numeric form) using the public key (e,n):
+        C = M^e mod n where C is the encrypted message.
+        
+            @Decryption
+    
+The recipient, possessing the private key (d,n), can retrieve M using:
+    M = C^d mod n
+    
+    4. RSA Security
+    
+The security of RSA mainly relies on:
+    .The difficulty of factoring a large number n into its prime factors p and q.
+    .The difficulty of computing the modular inverse without knowing phi(n).
+        
+However, RSA can be vulnerable to certain attacks if the keys are not large enough
+(typically, a key of at least 2048 bits is recommended today).
+
+            5. Applications of RSA
+    
+    RSA is used in:
+        .Data encryption (e.g. SSL/TLS for securing websites).
+        .Authentication and digital signatures.
+        .Secure key exchange in hybrid cryptographic protocols.
+
+RSA remains one of the most fundamental algorithms in modern cryptography, despite the emergence of faster
+and more secure alternatives like ECC (Elliptic Curve Cryptography).

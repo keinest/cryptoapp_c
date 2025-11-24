@@ -1,0 +1,84 @@
+                    THE HILL CRYPTOSYSTEM AND ITS OPERATING PRINCIPLE
+
+       ==> HISTORY
+
+The Hill cryptosystem, designed by mathematician Lester S. Hill in 1929, represents a significant 
+advancement compared to monoalphabetic substitution ciphers. By introducing the concept of polygraphic 
+encryption, where blocks of letters are transformed together using linear algebra, it marked an important 
+step in the evolution of cryptography. Although vulnerable to modern cryptanalysis techniques, its study 
+remains essential for understanding the foundations of ciphers based on matrix transformations.
+
+       ==> OPERATING PRINCIPLE
+
+           --> ENCRYPTION
+
+Its principle relies on the application of linear algebra to blocks of letters. Imagine our alphabet, from A to Z, 
+as a sequence of numbers ranging from 0 to 25. The plaintext message is divided into blocks of a fixed size 'n', 
+each represented by a vector of 'n' numbers. The encryption of a block is performed by multiplying it by a secret 
+square matrix of size 'nxn', which we will call 'K', all modulo 26.
+
+To encrypt a plaintext block represented by a column vector 'P' of size 'n x 1', we use the following formula:
+    C = (KP) mod 26
+
+Here, 'C' represents the column vector of size 'n x 1' corresponding to the ciphertext block. The key matrix 'K' 
+must be invertible modulo 26 to allow decryption.
+
+Let's take a simple example with a block size n = 2. Suppose our key is the matrix:
+
+    K = | 2  3 |
+        | 1  5 |
+
+And consider the plaintext block "CA", which is represented by the vector P = | 2 |.
+                                                                              | 0 |
+The encryption is performed as follows:
+
+    C = | 2  3 | | 2 | mod 26 = |(2 x 2) + (3 x 0)| mod 26 = | 4 | mod 26 = | 4 |
+        | 1  5 | | 0 |          |(1 x 2) + (5 x 0)|          | 2 |          | 2 |
+
+The vector | 4 | corresponds to the letter 'EC'. Thus, "CA" would be encrypted as "EC" with this key and
+           | 2 |
+this block size. This process is repeated for each block of the plaintext message.
+
+           --> DECRYPTION
+
+For this, we must reverse the matrix transformation. This requires knowing the secret key matrix 'K' and 
+calculating its modular inverse modulo 26, which is denoted as 'K^-1'. The inverse matrix 'K^-1' must satisfy 
+the condition (K . K^-1) mod 26 = I, where 'I' is the identity matrix of size 'n x n'. The existence of 'K^-1' 
+modulo 26 is guaranteed if and only if the determinant of 'K' is coprime with 26.
+
+The decryption formula is then as follows:
+    P = (K^-1C) mod 26
+
+Let's return to our example. To decrypt "EC" (represented by the vector | 4 |) with the key K = | 2  3 |, we must first find its
+                                                                        | 2 |                   | 1  5 |, modular 
+inverse K^-1. For a 2 x 2 matrix, K = | a  c |, the inverse is given by K^-1 = (ad - bc)^-1 x | d  -c | mod 26,
+                                      | b  d |                                                | -b  a |
+where (ad - bc)^-1 is the modular inverse of the determinant of K.
+
+For our example, the determinant of K is (2 x 5) - (3 x 1) = 10 - 3 = 7. The modular
+inverse of 7 modulo 26 is 15, because (7 x 15) mod 26 = 105 mod 26 = 1. Thus,
+
+    K^-1 = 15 x | 5  -1 | mod 26 =  | 75  -15 | mod 26 = | 23  11 |
+                | -3  2 |           | -45  30 |          |  7   4 |
+
+Now let's apply the decryption formula:
+
+    P = | 23  11 | x | 4 | mod 26 = |(23 x 4) + (11 x 2)| mod 26 = |92 + 22| mod 26 = |114| mod 26 = | 2 |
+        |  7   4 |   | 2 |          |( 7 x 4) + ( 4 x 2)|          |28 + 8 |          | 36|          | 0 |
+
+The vector | 2 | indeed corresponds to "CA", our original plaintext.
+           | 0 |
+
+However, despite its use of linear algebra to mask letter frequencies, the security of the Hill cryptosystem 
+is not robust against certain attacks. It relies on the secrecy of the key matrix 'K'. Nevertheless, if an 
+attacker manages to obtain enough corresponding plaintext-ciphertext pairs (typically 'n' pairs of blocks of size 'n'), 
+they can set up a system of modular linear equations and recover the key matrix.
+
+Furthermore, the requirement that the key matrix be invertible modulo 26 imposes constraints on its determinant, 
+which reduces the possible key space. For larger block sizes 'n', the calculation of the matrix inverse can 
+become complex, but this does not fundamentally increase the security against a known-plaintext attack.
+
+In conclusion, the Hill cryptosystem introduced important concepts in modern cryptography by using linear algebra 
+for polygraphic encryption. However, its vulnerability to known-plaintext attacks significantly limits its use in 
+applications requiring high security. It remains an instructive example of how mathematics can be applied to encryption, 
+while highlighting the importance of designing systems resistant to specific attacks.

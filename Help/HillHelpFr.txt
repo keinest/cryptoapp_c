@@ -1,0 +1,86 @@
+                    LE CRYPTOSYSTEME DE HILL ET SON PRINCIPE DE FONCTIONNEMENT
+
+       ==> HISTORIQUE
+
+Le cryptosysteme de Hill, concu par le mathematicien Lester S. Hill en 1929, represente
+une avancee significative par rapport aux chiffrements par substitution monoalphabetique. 
+En introduisant le concept de chiffrement polygraphique, ou des blocs de lettres sont 
+transformes ensemble a l'aide de l'algebre lineaire, il a marque une etape importante dans 
+l'evolution de la cryptographie. Bien que vulnerable aux techniques de cryptanalyse modernes,
+son etude demeure essentielle pour comprendre les fondements des chiffrements bases sur des 
+transformations matricielles.
+
+       ==> PRINCIPE DE FONCTIONNEMENT
+
+           --> CHIFFREMENT
+
+Son principe repose sur l'application de l'algebre lineaire a des blocs de lettres. Imaginez 
+notre alphabet, de A a Z, comme une sequence de nombres allant de 0 a 25. Le message clair est 
+divise en blocs de taille fixe 'n', chacun represente par un vecteur de 'n' nombres. 
+Le chiffrement d'un bloc s'effectue en le multipliant par une matrice carree secrete de taille 
+'nxn', que nous appellerons 'K', le tout modulo 26.
+
+Pour chiffrer un bloc de message clair represente par un vecteur colonne 'P' de taille 'n x 1', 
+on utilise la formule suivante :
+    C = (KP) mod 26
+
+Ici, 'C' represente le vecteur colonne de taille 'n x 1' correspondant au bloc de texte chiffre. 
+La matrice cle 'K' doit etre inversible modulo 26 pour permettre le dechiffrement.
+
+Prenons un exemple simple avec une taille de bloc n = 2. Supposons que notre cle soit la matrice :
+    
+    K =  2  3  
+         1  5
+
+Et considerons le bloc de message clair "CA", qui est represente par le vecteur P = (2, 0) . 
+Le chiffrement s'effectue comme suit :
+         
+    C = |2    3| |2| mod 26 = |2 x 2 + 3 x 0| mod 26 = |4| mod 26 = |4|
+        |1    5| |0|          |1 x 2 + 5 x 0|          |2|          |2|
+
+Le vecteur (4,2) correspond a la lettre 'EC'. Ainsi, "CA" serait chiffre en "EC" avec cette cle et 
+cette taille de bloc. Ce processus est repete pour chaque bloc du message clair.
+
+           --> DECHIFFREMENT
+
+Pour cela, nous devons inverser la transformation matricielle. Cela necessite de connaitre la matrice 
+cle secrète 'K' et de calculer son inverse modulaire modulo 26, que l'on note 'K^-1'. La matrice inverse 
+'K^-1' doit satisfaire la condition (K.K^-1) mod 26 = I, où 'I' est la matrice identité de taille 'n x n'. 
+L'existence de 'K^-1' modulo 26 est garantie si et seulement si le determinant de 'K' est premier avec 26.
+
+La formule de dechiffrement est alors la suivante :
+    P = (K^-1C) mod 26
+
+Reprenons notre exemple. Pour dechiffrer "EC" (4, 2) avec la cle K =  2  3  
+                                                                      1  5, nous devons d'abord trouver son 
+inverse modulaire K^-1. Pour une matrice 2 x 2, K =  |a c|                                                |d  -c|
+                                                     |b d|, l'inverse est donnee par K^-1 = (ad - bc)^-1 x|-b  a| mod 26, 
+ou (ad - bc)^-1 est l'inverse modulaire du determinant de K.
+
+Pour notre exemple, le determinant de K est (2 x 5) - (3 x 1) = 10 - 3 = 7. L'inverse 
+modulaire de 7 modulo 26 est 15, car (7 x 15) mod 26 = 105 mod 26 = 1. Ainsi,
+
+    K^-1 = 15 x|5  -1| mod 26 = |75  -15| mod 26 = |23  11|
+               |-3  2|          |-45  30|          | 7   4|
+
+Appliquons maintenant la formule de dechiffrement :
+
+    P = |23  11|   |4| mod 26 = |(23 x 4) + (7 x 2)| mod 26 = |92 + 14| mod 26 = |106| mod 26 = |2|
+        | 7   4| x |2|          |(11 x 4) + (4 x 2)|          |44 + 8 |          |52 |          |0|
+
+Le vecteur (2,0) correspond bien a "CA", notre message clair initial.
+
+Cependant, malgre son utilisation de l'algebre lineaire pour masquer les frequences des lettres, 
+la securite du cryptosysteme de Hill n'est pas robuste face a certaines attaques. Elle repose sur 
+le secret de la matrice cle 'K'. Neanmoins, si un attaquant parvient a obtenir suffisamment de 
+paires de texte clair et de texte chiffre correspondantes (typiquement 'n' paires de blocs de taille 'n'), 
+il peut mettre en place un systeme d'equations lineaires modulaires et retrouver la matrice cle.
+
+De plus, la necessite que la matrice cle soit inversible modulo 26 impose des contraintes sur son 
+determinant, ce qui reduit l'espace des cles possibles. Pour des tailles de bloc 'n' plus importantes, 
+le calcul de l'inverse de la matrice peut devenir complexe, mais cela n'augmente pas fondamentalement 
+la securite contre une attaque par texte clair connu.
+
+En conclusion, le cryptosysteme de Hill a introduit des concepts importants dans la cryptographie 
+moderne en utilisant l'algebre lineaire pour le chiffrement polygraphique. Cependant, sa vulnerabilite 
+a l'attaque par texte clair connu limite considerablement son utilisation dans des applications necessitant une securite elevee. Il reste un exemple instructif de la maniere dont les mathematiques peuvent etre appliquees au chiffrement, tout en soulignant l'importance de concevoir des systemes resistants a des attaques specifiques.

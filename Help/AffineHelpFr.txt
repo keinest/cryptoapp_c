@@ -1,0 +1,79 @@
+            LE CRYPTOSYSTEME AFFINE ET SON PRINCIPE DE FONCTIONNEMENT
+    
+        ==> HISTORIQUE
+
+Le cryptosysteme affine est un systeme de chiffrement, dont les fondations remontent 
+a des concepts mathematiques anciens,a servi de pierre angulaire dans l'histoire de 
+la cryptographie, illustrant de maniere simple et elegante les principes de la substitution
+monoalphabetique. Bien qu'il ne soit plus utilise pour securiser des informations sensibles 
+de nos jours, sa comprehension offre un eclairage precieux sur les bases du chiffrement et 
+les defis de la securite des communications.
+
+    ==> PRINCIPE DE FONCTIONNEMENT 
+
+            --> CHIFFREMENT
+
+Son principe repose sur une transformation mathematique simple mais efficace pour l'epoque. 
+Imaginez notre alphabet, de A a Z, comme une sequence de nombres allant de 0 a 25. Le chiffrement
+d'une lettre claire s'effectue en appliquant une fonction affine a sa valeur numerique. Cette fonction
+est definie par deux cles secretes : 
+    un coefficient multiplicateur, que nous appellerons 'a', et un terme d'addition, que nous designerons 
+    par 'b'.
+
+Pour chiffrer une lettre dont la valeur numerique est 'x', on utilise la formule suivante :
+    y = (ax + b) mod26
+
+Ici, 'y' represente la valeur numerique de la lettre chiffree, et l'operation " mod 26 " assure que le 
+resultat reste dans la plage de 0 a 25, correspondant a notre alphabet. Une fois cette operation effectuee, 
+la valeur numerique 'y' est reconvertie en la lettre chiffree correspondante.
+
+Prenons un exemple simple. Supposons que notre cle soit a = 3 et b = 5. Pour chiffrer la lettre 'C', qui a 
+une valeur numerique de 2, nous calculons :
+
+    (3 x 2 + 5) mod 26 = (6 + 5) mod 26 = 11 mod 26 = 11
+
+La valeur 11 correspond a la lettre 'L'. Ainsi, 'C' serait chiffre en 'L' avec cette cle. Ce processus 
+est repete pour chaque lettre du message clair.
+
+            --> DECHIFFREMENT
+  
+Pour cela, nous devons inverser la transformation affine. Cela necessite de connaitre la cle secrete (a,b)
+et de calculer l'inverse modulaire de 'a' modulo 26, que l'on note 'a^-1'. L'inverse modulaire de 'a' est 
+un nombre tel que (a.a^-1) mod 26 = 1. Une condition cruciale pour que le dechiffrement soit possible 
+est que 'a' et 26 soient premiers entre eux, c'est-a-dire qu'ils n'aient aucun diviseur commun autre que 1.
+
+La formule de dechiffrement est alors la suivante :
+        x = a^-1(y - b) mod 26
+
+En reprenant notre exemple, si nous voulons dechiffrer 'L' (valeur 11) avec la cle a = 3 et b = 5, 
+nous devons d'abord trouver l'inverse modulaire de 3 modulo 26. Dans ce cas, 3^-1 mod 26 = 9, 
+car (3 x 9)mod 26 = 27 mod26 = 1. Appliquons maintenant la formule de dechiffrement :
+    x = 9 x (11 - 5) mod 26 = 9 x 6 mod 26 = 54 mod 26 = 2
+
+La valeur 2 correspond bien a la lettre 'C', notre message clair initial.
+
+Cependant, malgre son elegance mathematique, la securite du cryptosysteme affine est aujourd'hui 
+consideree comme tres faible. Elle repose entierement sur le secret de la paire de cles (a,b). 
+Malheureusement, l'espace des cles possibles est relativement restreint. Etant donne que 'a' 
+doit etre premier avec 26, il n'y a que 12 choix possibles pour 'a'. Le terme 'b' peut 
+prendre 26 valeurs differentes. Cela nous donne un total de seulement 12 x 26 = 312 cles 
+possibles. Un attaquant moderne pourrait facilement tester toutes ces cles par une attaque 
+de force brute en un temps tres court.
+
+De plus, le cryptosystème affine, etant une forme de substitution monoalphabetique, est 
+intrinsequement vulnerable a l'analyse frequentielle. Dans n'importe quelle langue, certaines 
+lettres apparaissent plus frequemment que d'autres. En analysant la frequence des lettres dans 
+le texte chiffre, un cryptanalyste peut etablir des correspondances probables avec les frequences 
+connues des lettres dans la langue du message original, ce qui facilite grandement le dechiffrement 
+sans meme connaitre la cle.
+
+Enfin, si un attaquant parvient a obtenir une ou plusieurs paires de lettres claires et leurs 
+correspondantes chiffrees, il peut resoudre un systeme d'equations lineaires modulaires pour determiner
+la cle (a,b) avec une relative facilite.
+
+En conclusion, le cryptosysteme affine, bien qu'historiquement pertinent pour illustrer les principes
+fondamentaux du chiffrement, offre une securite tres limitee face aux techniques modernes de cryptanalyse.
+Il sert aujourd'hui principalement d'outil pedagogique pour introduire les concepts de base de la cryptographie
+avant d'explorer des systemes bien plus robustes et complexes. Sa simplicite nous rappelle l'importance 
+cruciale d'avoir un espace de cles suffisamment vaste et de concevoir des methodes de chiffrement qui 
+resistent a diverses formes d'attaques statistiques et mathematiques.

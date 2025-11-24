@@ -1,0 +1,70 @@
+                Cryptosysteme RSA et son principe de fonctionnement 
+
+Le cryptosysteme RSA (Rivest-Shamir-Adleman) est un algorithme de chiffrement 
+asymetrique largement utilise pour securiser les communications sur Internet. 
+Il repose sur la difficulte du probleme de la 
+factorisation des grands nombres premiers.
+                
+                1. Principe de base
+
+    RSA est un systeme de chiffrement a cle publique, ce qui signifie qu'il 
+utilise une paire de cles :
+    
+    .Une cle publique (utilisee pour chiffrer les messages)
+    .Une cle privee (utilisee pour dechiffrer les messages)
+
+La securite de RSA repose sur le fait qu'il est facile de multiplier deux 
+grands nombres premiers, mais extremement difficile de
+retrouver ces nombres premiers a partir du produit (probleme de factorisation 
+des nombres entiers).
+                2. Generation des cles
+
+    Choisir deux grands nombres premiers p et q.
+
+    Calculer leur produit :
+        .n = p x q
+        La valeur de n est utilisee comme module pour les cles publique et privee.
+    Calculer la fonction indicatrice d'Euler :
+        .phi(n) = (p - 1)x(q - 1)
+    Cette fonction est necessaire pour determiner l'exposant de la cle.
+    Choisir un nombre entier e (exposant public) tel que : 
+        1 < e < phi(n) et pgcd(e,phi(n)) = 1 (c'est-a-dire que e doit etre premier avec phi(n)).
+
+    Calculer l'exposant prive d :
+        d = e^-1 mod phi(n). d est l'inverse modulaire de e modulo phi(n).
+
+    Les cles generees sont :
+        Cle publique : (e,n)
+        Cle privee : (d,n)
+
+3. Chiffrement et dechiffrement.
+
+    @Chiffrement
+
+Pour chiffrer un message M (represente sous forme numerique) avec la cle publique (e,n) : 
+
+    C = M^e mod n ou C est le message chiffre.
+
+    @Dechiffrement
+
+Le destinataire, possedant la cle privee (d,n), peut retrouver M par : 
+
+    M = C^d mod n
+
+4. Securite du RSA
+
+La securite de RSA repose principalement sur :
+    .La difficulte de factoriser un grand nombre n en ses facteurs premiers p et q.
+    .La difficulte de calculer l'inverse modulaire sans connaitre phi(n).    
+    Toutefois, RSA peut etre vulnerable a certaines attaques si les cles ne sont pas 
+suffisamment grandes (typiquement, une cle d'au moins 2048 bits est recommandee aujourd'hui).
+    
+5. Applications du RSA
+
+RSA est utilise dans :
+    . Le chiffrement des donnees (ex : SSL/TLS pour securiser les sites web).
+    . L'authentification et la signature numerique.
+    . L'echange securise de cles dans les protocoles de cryptographie hybride.
+C'est l'un des algorithmes les plus fondamentaux en cryptographie 
+moderne, malgre l'apparition 
+d'algorithmes plus rapides et securises comme ECC (Elliptic Curve Cryptography).
