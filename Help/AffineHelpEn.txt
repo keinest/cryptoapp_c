@@ -1,0 +1,76 @@
+            THE AFFINE CRYPTOSYSTEM AND ITS OPERATING PRINCIPLE
+
+        ==> HISTORY
+
+The affine cryptosystem is an encryption system whose foundations date back to ancient mathematical 
+concepts. It served as a cornerstone in the history of cryptography, illustrating in a simple and 
+elegant manner the principles of monoalphabetic substitution. Although it is no longer used to secure 
+sensitive information nowadays, its understanding provides valuable insight into the basics of encryption 
+and the challenges of communication security.
+
+       ==> OPERATING PRINCIPLE
+
+           --> ENCRYPTION
+
+Its principle is based on a mathematical transformation that was simple yet effective for its time. Imagine 
+our alphabet, from A to Z, as a sequence of numbers ranging from 0 to 25. The encryption of a plaintext 
+letter is done by applying an affine function to its numerical value. This function is defined by two 
+secret keys:
+    a multiplicative coefficient, which we will call 'a', and an additive term, which we will designate 
+    by 'b'.
+
+To encrypt a letter whose numerical value is 'x', we use the following formula:
+    y = (ax + b) mod 26
+
+Here, 'y' represents the numerical value of the ciphertext letter, and the operation "mod 26" ensures 
+that the result stays within the range of 0 to 25, corresponding to our alphabet. Once this operation is 
+performed, the numerical value 'y' is converted back to the corresponding ciphertext letter.
+
+Let's take a simple example. Suppose our key is a = 3 and b = 5. To encrypt the letter 'C', which has a 
+numerical value of 2, we calculate:
+
+    (3 x 2 + 5) mod 26 = (6 + 5) mod 26 = 11 mod 26 = 11
+
+The value 11 corresponds to the letter 'L'. Thus, 'C' would be encrypted as 'L' with this key. This process 
+is repeated for each letter of the plaintext message.
+
+           --> DECRYPTION
+
+For this, we must reverse the affine transformation. This requires knowing the secret key (a, b) and 
+calculating the modular multiplicative inverse of 'a' modulo 26, which is denoted as 'a^-1'. 
+The modular inverse of 'a' is a number such that (a.a^-1) mod 26 = 1. A crucial condition for 
+decryption to be possible is that 'a' and 26 are coprime, that is, they have no common divisor other 
+than 1.
+
+The decryption formula is then as follows:
+    x = a^-1(y - b) mod 26
+
+Going back to our example, if we want to decrypt 'L' (value 11) with the key a = 3 and b = 5, we 
+must first find the modular inverse of 3 modulo 26. In this case, 3^-1 mod 26 = 9, 
+because (3 x 9) mod 26 = 27 mod 26 = 1. Now let's apply the decryption formula:
+    x = 9 x (11 - 5) mod 26 = 9 x 6 mod 26 = 54 mod 26 = 2
+
+The value 2 indeed corresponds to the letter 'C', our original plaintext letter.
+
+However, despite its mathematical elegance, the security of the affine cryptosystem is today considered 
+very weak. It relies entirely on the secrecy of the key pair (a, b). Unfortunately, the space of possible 
+keys is relatively small. Given that 'a' must be coprime with 26, there are only 12 possible choices 
+for 'a'. The term 'b' can take 26 different values. This gives us a total of only 12 x 26 = 312 possible 
+keys. A modern attacker could easily test all these keys with a brute-force attack in a very short time.
+
+Furthermore, the affine cryptosystem, being a form of monoalphabetic substitution, is inherently vulnerable 
+to frequency analysis. In any language, some letters appear more frequently than others. By analyzing the 
+frequency of letters in the ciphertext, a cryptanalyst can establish probable correspondences with the 
+known frequencies of letters in the language of the original message, which greatly facilitates decryption 
+without even knowing the key.
+
+Finally, if an attacker manages to obtain one or more pairs of plaintext letters and their corresponding 
+ciphertext letters, they can solve a system of modular linear equations to determine the key (a, b) with 
+relative ease.
+
+In conclusion, the affine cryptosystem, although historically relevant for illustrating the fundamental 
+principles of encryption, offers very limited security against modern cryptanalysis techniques. Today, it 
+mainly serves as a pedagogical tool to introduce the basic concepts of cryptography before exploring much 
+more robust and complex systems. Its simplicity reminds us of the crucial importance of having a sufficiently 
+large key space and designing encryption methods that resist various forms of statistical and mathematical 
+attacks.
